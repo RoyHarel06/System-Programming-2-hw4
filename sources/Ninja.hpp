@@ -16,12 +16,12 @@ namespace ariel
 			/*
 			 * Moves torwards character 'other' up to distance 'move_speed'.
 			 */
-			void move(Character *other);
+			void move(Character* other);
 
 			/*
 			 * If character 'other' is within a range of 1 unit the ninja will hit him for 40 hp.
 			 */
-			void slash(Character *other);
+			void slash(Character* other);
 
 			/*
 			 * Prints ninja's details in the following format: "N: name, hp, location".

@@ -26,7 +26,7 @@ namespace ariel
 			/*
 			 * Returns the distance between this character and the other character.
 			 */
-			double distance(Character *other) const;
+			double distance(Character* other) const;
 
 			/*
 			 * Reduces hp of this character based on 'power'.

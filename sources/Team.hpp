@@ -14,7 +14,7 @@ namespace ariel
 
 		public:
 			// Constructor:
-			Team(Character *leader);
+			Team(Character* leader);
 
             // Destructor:
 			virtual ~Team();
