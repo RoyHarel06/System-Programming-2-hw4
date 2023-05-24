@@ -33,8 +33,8 @@ namespace ariel
 			string print() const;
 
 			/*
-			 * Returns the closest point from point 'curr' to point 'other' within distance 'dist'.
+			 * Returns the closest point from point 'curr' to point 'other' within distance 'max_distance'.
 			 */
-			static const Point &moveTowards(const Point &curr, const Point &other, const double dist);
+			static const Point& moveTowards(const Point& current, const Point& other, const double max_distance);
 	};
 }

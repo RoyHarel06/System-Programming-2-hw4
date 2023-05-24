@@ -12,6 +12,12 @@ namespace ariel
 			Character* leader;
 			vector<Character*> members;
 
+			virtual void orderMembers();
+
+			Character* findClosestToLeader(vector<Character*> characters);
+			void electNewLeader();
+			Character* findTarget(Team* other);
+
 		public:
 			// Constructor:
 			Team(Character* leader);
@@ -22,7 +28,7 @@ namespace ariel
 			/*
 			 * Adds 'member' to the team.
 			 */
-			void add(Character* member);
+			void add(Character* new_member);
 
             /*
              * Returns 'members' list.
@@ -47,18 +53,11 @@ namespace ariel
 
     class Team2 : public Team
 	{
+		protected:
+			void orderMembers() override;
+
 		public:
 			Team2(Character* leader);
-
-			/*
-			 * Attack team 'other'. Based on recency in team.
-			 */
-			void attack(Team* other) override;
-
-			/*
-			 * Prints the team members details. Prints based on recency in team.
-			 */
-			void print() const override;
 	};
 	class SmartTeam : public Team
 	{
