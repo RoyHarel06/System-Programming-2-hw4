@@ -63,5 +63,10 @@ namespace ariel
 			 * Sets character as part of a team.
 			 */
 			void enterTeam();
+
+			/*
+			 * Returns current hit points.
+			 */
+			int getHP();
 	};
 }

@@ -18,7 +18,7 @@ namespace ariel
 
 			Character* findClosestToLeader(vector<Character*> characters);
 			void electNewLeader();
-			Character* findTarget(Team* other);
+			virtual Character* findTarget(Team* other);
 
 		public:
 			// Constructor:

@@ -55,4 +55,8 @@ namespace ariel
 	void Character::enterTeam() {
 		in_team = true;
 	}
+
+	int Character::getHP() {
+		return hit_points;
+	}
 }

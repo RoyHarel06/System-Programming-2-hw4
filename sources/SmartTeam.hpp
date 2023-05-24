@@ -6,6 +6,10 @@ namespace ariel
 {
     class SmartTeam : public Team
 	{
+		private:
+			Character* findLowestHP(vector<Character*> characters);
+			Character* findTarget(Team* other) override;
+			
 		public:
 			SmartTeam(Character* leader);
 
