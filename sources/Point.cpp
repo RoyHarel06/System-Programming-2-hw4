@@ -1,13 +1,12 @@
 #include "Point.hpp"
+#include <cmath>
 #include <stdexcept>
 
 namespace ariel
 {
-    Point::Point() {
-        x_position = 0;
-        y_position = 0;
+    Point::Point() : x_position(0.0), y_position(0.0) {
     }
-    Point::Point(double x_position, double y_position) : x_position(x_position), y_position(y_position) {
+    Point::Point(double x_value, double y_value) : x_position(x_value), y_position(y_value) {
     }
 
     double Point::getX() const {
@@ -24,14 +23,16 @@ namespace ariel
     }
 
     double Point::distance(Point other) const {
-        return sqrt(pow(x_position - other.getX(), 2) + pow(y_position - other.getY(), 2));
+        double x_squared = pow(x_position - other.getX(), 2);
+        double y_squared = pow(y_position - other.getY(), 2);
+        return sqrt(x_squared + y_squared);
     }
 
     string Point::print() const {
         return "(" + to_string(x_position) + "," + to_string(y_position) + ")";
     }
 
-    const Point& Point::moveTowards(const Point& current, const Point& other, const double max_distance) {
+    const Point Point::moveTowards(const Point& current, const Point& other, const double max_distance) {
         if (max_distance < 0)
             throw invalid_argument("Negative distance.");
 

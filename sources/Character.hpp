@@ -3,6 +3,7 @@
 #include "Point.hpp"
 
 #include <string>
+#include <stdexcept>
 using namespace std;
 
 namespace ariel
@@ -11,12 +12,16 @@ namespace ariel
 	{
 		protected:
 			string name;
-			Point& location;
+			Point location;
 			int hit_points;
+			bool in_team;
 
 		public:
             // Constructor:
-			Character(string name, Point& location, int hit_points);
+			Character(string name, const Point& location, int hit_points);
+
+			// Destructor:
+			virtual ~Character();
 
 			/*
 			 * Returns true if the character is alive.
@@ -48,5 +53,15 @@ namespace ariel
              * If the character died the format will be the following: "(name), location".
 			 */
 			virtual string print() const = 0;
+
+			/*
+			 * Returns true if the character is in a team.
+			 */
+			bool isInTeam();
+
+			/*
+			 * Sets character as part of a team.
+			 */
+			void enterTeam();
 	};
 }

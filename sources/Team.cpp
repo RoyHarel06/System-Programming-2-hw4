@@ -1,5 +1,6 @@
 #include "Team.hpp"
 #include <iostream>
+#include <limits>
 
 namespace ariel
 {
@@ -9,14 +10,16 @@ namespace ariel
         
         for (Character* member : members)
         {
-            if (dynamic_cast<Cowboy*>(member))
-                ordered_members.push_back(member);
+            Cowboy* cowboy = dynamic_cast<Cowboy*>(member);
+            if (cowboy != nullptr)
+                ordered_members.push_back(cowboy);
         }
         
         for (Character* member : members)
         {
-            if (dynamic_cast<Ninja*>(member))
-                ordered_members.push_back(member);
+            Ninja* ninja = dynamic_cast<Ninja*>(member);
+            if (ninja != nullptr)
+                ordered_members.push_back(ninja);
         }
         
         members = ordered_members;
@@ -25,7 +28,7 @@ namespace ariel
 	Team::Team(Character* leader)
 		: leader(leader)
 	{
-		members.push_back(leader);
+		add(leader);
 	}
 
 	Team::~Team()
@@ -40,12 +43,19 @@ namespace ariel
 
 	void Team::add(Character* new_member)
 	{
+        if (members.size() == 10)
+		    throw runtime_error("Team can only have 10 members.");
+
+        if (new_member->isInTeam())
+            throw runtime_error("Character already in a team.");
+
         for (Character* member : members)
         {
             if (member == new_member)
                 return;
         }
 
+        new_member->enterTeam();
 		members.push_back(new_member);
         orderMembers();
 	}
@@ -61,7 +71,7 @@ namespace ariel
 
 		for (Character* member : members)
         {
-            if (member->isAlive() == true)
+            if (member->isAlive())
                 living_members++;
         }
 
@@ -79,7 +89,7 @@ namespace ariel
 	}
 
     Character* Team::findClosestToLeader(vector<Character*> characters) {
-        double min_distance = std::numeric_limits<double>::max();
+        double min_distance = numeric_limits<double>::max();
         Character* closest_character = nullptr;
 
         for (Character* character : characters)
@@ -114,6 +124,11 @@ namespace ariel
 
     void Team::attack(Team* other)
 	{
+        if (other == nullptr)
+			throw invalid_argument("Other team in null.");
+        else if (other->stillAlive() <= 0)
+            throw runtime_error("Other team is dead.");
+
         if (leader->isAlive() == false)
             electNewLeader();
 
@@ -121,14 +136,20 @@ namespace ariel
 
         for (Character* member : members)
         {
-            if (Cowboy* cowboy = dynamic_cast<Cowboy*>(member))
+            if (member->isAlive() == false)
+                continue;
+
+            Cowboy* cowboy = dynamic_cast<Cowboy*>(member);
+            if (cowboy != nullptr)
             {
-                if (cowboy->hasBullets())
+                if (cowboy->hasboolets())
 				    cowboy->shoot(target);
                 else
                     cowboy->reload();
             }
-            else if (Ninja* ninja = dynamic_cast<Ninja*>(member))
+
+            Ninja* ninja = dynamic_cast<Ninja*>(member);
+            if (ninja != nullptr)
             {
                 if (ninja->distance(target) <= 1)
                     ninja->slash(target);
@@ -138,59 +159,10 @@ namespace ariel
 
             if (target->isAlive() == false)
             {
-                target = findTarget(other);
-                if (target == nullptr)
+                if (other->stillAlive() <= 0)
                     break;
+                target = findTarget(other);
             }
         }
 	}
-
-    // TEAM2---------------------------------------------------------------------
-
-    Team2::Team2(Character* leader) : Team(leader) {
-    }
-
-    // Empty function taht will not change the order. Hence the order will be kept as the insertion order.
-    void Team2::orderMembers()
-    {
-        return; 
-    }
-
-    // MART TEAM-------------------------------------------------------------------
-
-    SmartTeam::SmartTeam(Character* leader) : Team(leader) {
-    }
-
-    void SmartTeam::attack(Team* other)
-    {
-        if (leader->isAlive() == false)
-            electNewLeader();
-
-        Character* target = findTarget(other);
-
-        for (Character* member : members)
-        {
-            if (Cowboy* cowboy = dynamic_cast<Cowboy*>(member))
-            {
-                if (cowboy->hasBullets())
-				    cowboy->shoot(target);
-                else
-                    cowboy->reload();
-            }
-            else if (Ninja* ninja = dynamic_cast<Ninja*>(member))
-            {
-                if (ninja->distance(target) <= 1)
-                    ninja->slash(target);
-                else
-                    ninja->move(target);
-            }
-
-            if (target->isAlive() == false)
-            {
-                target = findTarget(other);
-                if (target == nullptr)
-                    break;
-            }
-        }
-    }
 }

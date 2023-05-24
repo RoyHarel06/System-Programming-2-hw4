@@ -2,9 +2,12 @@
 
 namespace ariel
 {
-	Character::Character(string name, Point& location, int hit_points)
-		: name(name), location(location), hit_points(hit_points) {
+	Character::Character(string name, const Point& location, int hit_points)
+		: name(name), location(location), hit_points(hit_points), in_team(false) {
 	}
+
+	Character::~Character() {
+    }
 
 	bool Character::isAlive() const
 	{
@@ -21,6 +24,9 @@ namespace ariel
 
 	void Character::hit(int power)
 	{
+		if (power < 0)
+			throw invalid_argument("Power cant be negative.");
+
 		hit_points -= power;
 	}
 
@@ -40,5 +46,13 @@ namespace ariel
             return name + ", " + to_string(hit_points) + ", " + location.print();
         else
             return "(" + name + "), " + location.print();
+	}
+
+	bool Character::isInTeam() {
+		return in_team;
+	}
+
+	void Character::enterTeam() {
+		in_team = true;
 	}
 }

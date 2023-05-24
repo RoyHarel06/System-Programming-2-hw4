@@ -22,7 +22,7 @@ namespace ariel
 			/*
 			 * Returns true if the cowboy has bullets left.
 			 */
-			bool hasBullets() const;
+			bool hasboolets() const;
 
 			/*
 			 * Reloads the cowboy's gun to 6 bullets.

@@ -2,7 +2,9 @@
 
 #include <vector>
 #include "Cowboy.hpp"
-#include "Ninja.hpp"
+#include "OldNinja.hpp"
+#include "TrainedNinja.hpp"
+#include "YoungNinja.hpp"
 
 namespace ariel
 {
@@ -49,24 +51,5 @@ namespace ariel
 			 * Prints the team members details. Prints Cowboys first and then Ninjas.
 			 */
 			virtual void print() const;
-	};
-
-    class Team2 : public Team
-	{
-		protected:
-			void orderMembers() override;
-
-		public:
-			Team2(Character* leader);
-	};
-	class SmartTeam : public Team
-	{
-		public:
-			SmartTeam(Character* leader);
-
-			/*
-			 * Attack team 'other'. Using a 'smarter' attack algorithm.
-			 */
-			void attack(Team* other) override;
 	};
 }
